@@ -1,0 +1,317 @@
+{% extends "interview/base.html" %} {% load static %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %} {% endblock stylesheets %} {% block content %}
+
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+  <div class="pcoded-content">
+    {% include 'interview/message.html' %}
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Registered participants Details</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'home' %}"><i class="feather icon-home"></i></a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'RegisterdParticipants' %}"
+                  >Registered participants</a
+                >
+              </li>
+              <li class="breadcrumb-item">
+                <a href="">{{participant.studentId}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+      <!-- [ basic-table ] start -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <form method="post" action="">
+              {% csrf_token %}
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> what is Duburi ?</span>
+                </div>
+                {{ form.firstQues }}
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> Full Name</span>
+                </div>
+                {{ form.name }}
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Email</span>
+                    </div>
+                    {{ form.email }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Contact No.</span>
+                    </div>
+                    {{ form.number }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">student Id</span>
+                    </div>
+                    {{ form.studentId }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Bracu Dpt</span>
+                    </div>
+                    {{ form.dept }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        >Bracu Enrollment semester</span
+                      >
+                    </div>
+                    {{ form.enroll }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Residential Semester</span>
+                    </div>
+                    {{ form.rs }}
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        >Have idea of Basic Robotics?</span
+                      >
+                    </div>
+                    {{ form.basicOfRobotics }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> robotics projects</span>
+                    </div>
+                    {{ form.project }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">anyOtherTeam</span>
+                    </div>
+                    {{ form.anyOtherTeam }}
+                  </div>
+                </div>
+
+                {% comment %} {% endcomment %} {% comment %} {% endcomment %}
+                <div class="col-12">
+                  <div class="form-group mb-3">
+                    <label for="exampleFormControlInput1"
+                      >Github/publications -
+                      <a href="{{participant.github}}" target="_blank"
+                        >{{participant.github}}</a
+                      >
+                    </label>
+                    {{ form.github }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group mb-3">
+                    <label for="exampleFormControlInput1"
+                      >facebook -
+                      <a href="{{participant.facebook}}" target="_blank"
+                        >{{participant.facebook}}</a
+                      >
+                    </label>
+                    {{ form.facebook }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group mb-3">
+                    <label for="exampleFormControlInput1"
+                      >linkedin -
+                      <a href="{{participant.linkedin}}" target="_blank"
+                        >{{participant.linkedin}}</a
+                      >
+                    </label>
+                    {{ form.linkedin }}
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> isrobu?</span>
+                    </div>
+                    {{ form.isrobu }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> robu_dpt</span>
+                    </div>
+                    {{ form.robudpt }}
+                  </div>
+                </div>
+              </div>
+              {% comment %} {% endcomment %}
+              <hr class="mb-5" />
+              <div class="row">
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Duburi subteam</span>
+                    </div>
+                    {{ form.subTeam }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> pool access</span>
+                    </div>
+                    {{ form.pool }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> choose you why?</span>
+                    </div>
+                    {{ form.choose }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> experience</span>
+                    </div>
+                    {{ form.experience }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group mb-3">
+                    <label for="exampleFormControlInput1"
+                      >project profile -
+                      <a href="{{participant.projectProfile}}" target="_blank"
+                        >{{participant.projectProfile}}</a
+                      >
+                    </label>
+                    {{ form.projectProfile }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> skill</span>
+                    </div>
+                    {{ form.skill }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group mb-3">
+                    <label for="exampleFormControlInput1"
+                      >cv -
+                      <a href="{{participant.cv}}" target="_blank"
+                        >{{participant.cv}}</a
+                      >
+                    </label>
+                    {{ form.cv }}
+                  </div>
+                </div>
+
+                <div class="col-3">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Select</span>
+                    </div>
+                    {{ form.approve }}
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Star</span>
+                    </div>
+                    {{ form.star }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> remark</span>
+                    </div>
+                    {{ form.remark }}
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                name="login"
+                class="btn btn-block btn-success mb-4"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+  </div>
+</section>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+  $(document).ready(function () {
+    $("#table_id").DataTable();
+  });
+</script>
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+  //Query All input fields
+  var form_fields = document.getElementsByTagName("input");
+  for (var field in form_fields) {
+    form_fields[field].className += " form-control";
+  }
+</script>
+
+{% endblock javascripts %}

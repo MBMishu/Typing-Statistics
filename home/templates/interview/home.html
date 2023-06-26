@@ -1,0 +1,93 @@
+{% extends "interview/base.html" %} {% load static %} {% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    {% include 'interview/message.html' %}
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Profile</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'admin_home' %}"
+                  ><i class="feather icon-home"></i
+                ></a>
+              </li>
+              <li class="breadcrumb-item"><a href="#!">home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+      <div class="col-lg-4 col-md-4 order-lg-2 order-md-2">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{user.name}}</h5>
+            <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
+            <p class="card-text">
+              <strong>Conatct Number:</strong> {{user.phone}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <form
+              method="post"
+              action="{% url 'admin_home' %}"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> Full Name</span>
+                </div>
+                {{ form.name }}
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Email</span>
+                    </div>
+                    {{ form.email }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Contact No.</span>
+                    </div>
+                    {{ form.phone }}
+                  </div>
+                </div>
+              </div>
+
+              <hr class="mb-5" />
+
+              <button
+                type="submit "
+                name="login "
+                class="btn btn-block btn-success mb-4"
+              >
+                Update
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

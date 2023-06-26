@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Type</title>
+    <!-- icon -->
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/logo.png' %}"
+      type="image/x-icon"
+    />
+    <link
+      rel="icon"
+      href="{% static 'dashboard/images/logo.png' %}"
+      type="image/x-icon"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- bootstrap css -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <!-- animate css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+      crossorigin="anonymous"
+    />
+
+    <!-- remixicon css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <!-- line font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href=" {% static 'dashboard/css/style.css' %} " />
+    <style></style>
+  </head>
+
+  <body>
+    <div class="auth-wrapper bg-c-yellow">
+      <div class="auth-content">
+        {% include 'interview/message.html' %}
+        <div class="card">
+          <div class="row align-items-center text-center">
+            <div class="col-md-12">
+              <div class="card-body">
+                <img
+                  src=" {% static 'dashboard/images/logo_blue.png' %} "
+                  alt=""
+                  class="img-fluid mb-4"
+                />
+                <h4 class="mb-3 f-w-400">User Sign Up</h4>
+                <form method="post" action="">
+                  {% csrf_token %}
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="ri-user-line"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="fullname"
+                      name="fullname"
+                      placeholder="Full Name"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="ri-mail-send-line"></i
+                      ></span>
+                    </div>
+                    {{ form.username }}
+                  </div>
+
+                  <input
+                    type="password"
+                    name="password1"
+                    value="random_value"
+                    hidden
+                  />
+                  <input
+                    type="password"
+                    name="password2"
+                    value="random_value"
+                    hidden
+                  />
+                  <button
+                    type="submit"
+                    name="login"
+                    class="btn btn-block btn-success mb-4"
+                  >
+                    Signin
+                  </button>
+                </form>
+                <p class="mb-2 text-muted">
+                  Already have an account? -
+                  <a href=" {% url 'user_Handlelogin' %} " class="text-danger"
+                    >Sign In</a
+                  >
+                </p>
+
+                <p class="mb-2 text-muted">
+                  <script type="text/javascript">
+                    document.write(new Date().getFullYear());
+                  </script>
+                  | Made with ❤ by
+                  <a
+                    href="https://mbmishu.com/"
+                    target="_blank"
+                    class="text-danger"
+                    >Mishu</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- developed by A.T.M. Masum Billah  -->
+    <!-- mbmishu.com -->
+
+    <!-- jquey  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
+      integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
+      crossorigin="anonymous"
+    ></script>
+    {% comment %}
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    {% endcomment %}
+
+    <!-- send time to timer -->
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+      //Query All input fields
+      var form_fields = document.getElementsByTagName("input");
+      for (var field in form_fields) {
+        form_fields[field].className += " form-control";
+      }
+    </script>
+  </body>
+</html>

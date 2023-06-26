@@ -1,0 +1,126 @@
+{% extends "interview/base.html" %} {% load static %} {% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    {% include 'interview/message.html' %}
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Upload Pdf</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'admin_home' %}"
+                  ><i class="feather icon-home"></i
+                ></a>
+              </li>
+              <li class="breadcrumb-item"><a href="#!">home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+      <div class="col-lg-4 col-md-4 order-lg-1">
+        <div class="card">
+          <div class="card-body">
+            <form
+              method="post"
+              action="{% url 'upload_pdf' %}"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> File Name</span>
+                </div>
+                {{ form.name }}
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Pdf File</label>
+                {{form.file}}
+              </div>
+
+              <button
+                type="submit "
+                name="login "
+                class="btn btn-block btn-success mb-4"
+              >
+                upload
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8 order-lg-0">
+        <div class="card">
+            <div class="card-header ml-auto">
+            </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive table-bordered">
+                    <table class="table " id="table_id">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Pdf file</th>
+        
+                                <th>Date</th>
+                                <th>Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="table-striped table-hover">
+
+                            {% for item in list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+          
+                                <td>
+                                    <a class="venobox" href="{{item.PdfURL}}" target="_blank"> {{item.name}}</a>
+                                </td>
+                                <td>{{item.date_created}}</td>
+                                <td><a href="{% url 'PdfDelete' item.id %}" class="btn btn-sm btn-danger"> Delete</a></td>
+
+                            </tr>
+
+
+                            {% endfor %}
+                            <tfoot class="thead-dark">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Pdf file</th>
+
+                                  <th>Date</th>
+                                  <th>Delete</th>
+                                </tr>
+                            </tfoot>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+
+
+        $('#table_id').DataTable();
+    });
+</script>
+
+
+
+{% endblock javascripts %}

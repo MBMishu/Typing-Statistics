@@ -1,0 +1,100 @@
+{% extends "interview/base.html" %} {% load static %} {% block content %}
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        {% include 'interview/message.html' %}
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Blog List</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home' %}"><i class="feather icon-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="#!">Blog List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- [ basic-table ] start -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header ml-auto">
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive table-bordered">
+                            <table class="table " id="table_id">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>image</th>
+                                        <th>video_link</th>
+                                        <th>Category</th>
+                                        <th>title</th>
+                                        <th>upload By</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="table-striped table-hover">
+
+                                    {% for item in list %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <a class="venobox" href="{{item.PicURL}}"> <img src="{{item.PicURL}}" width="120px" class="img-fluid img-responsive" alt=""></a>
+                                        </td>
+                                        <td> <a href="{{item.video_link}}" class="venobox" data-vbtype="video" data-autoplay="true"> {{item.video_link}}</a></td>
+                                        <td>{{item.category}}</td>
+                                        <td>{{item.title}}</td>
+                                        <td>{{item.uploadBy}}</td>
+                                        <td><a href="{% url 'BlogUpdate' item.id %}" class="btn btn-sm btn-info"> Edit</a></td>
+                                        <td><a href="{% url 'BlogDelete' item.id %}" class="btn btn-sm btn-danger"> Delete</a></td>
+
+                                    </tr>
+
+
+                                    {% endfor %}
+                                    <tfoot class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>image</th>
+                                            <th>video_link</th>
+                                            <th>Category</th>
+                                            <th>title</th>
+                                            <th>upload By</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %} {% block javascripts %}
+<script>
+    $(".venobox").venobox({
+        spinner: "cube-grid",
+        share: false,
+    });
+    $(document).ready(function() {
+
+
+        $('#table_id').DataTable();
+
+    });
+</script>
+{% endblock javascripts %}

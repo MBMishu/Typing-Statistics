@@ -1,0 +1,64 @@
+{% extends "interview/base.html" %} {% load static %} {% block content %}
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        {% include 'interview/message.html' %}
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">{{page}} TeamInfo List</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home' %}"><i class="feather icon-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="#!"> {{page}} TeamInfo List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- [ basic-table ] start -->
+
+            {% for item in list %}
+
+            <div class="col-lg-3 col-md-3">
+                <div class="card">
+                    <img class="img-fluid card-img-top" src="{{item.PicURL}}" alt="Card image cap" />
+                    <div class="card-body">
+                        <p class="card-title text-center"><strong>{{item.name}}</strong></p>
+                        <p class="card-text text-center">
+                            <strong>{{item.subTeam}} {{item.subTeam_position}}</strong>
+                        </p>
+                        <a href="{% url 'TeamInfoUpdate' item.id page %}" class="btn btn-sm btn-info">
+              Edit</a
+            >
+            <a
+              href="{% url 'TeamInfoDelete' item.id page %}"
+              class="btn btn-sm btn-danger"
+            >
+              Delete</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %} {% block javascripts %}
+<script>
+  $(".venobox").venobox({
+    spinner: "cube-grid",
+    share: false,
+  });
+  $(document).ready(function () {
+    $("#table_id").DataTable();
+  });
+</script>
+{% endblock javascripts %}

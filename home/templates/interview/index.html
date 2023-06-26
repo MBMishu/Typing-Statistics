@@ -1,0 +1,244 @@
+{% extends "interview/base.html" %} {% load static %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    {% include 'interview/message.html' %}
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Summary</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'home' %}"><i class="feather icon-home"></i></a>
+              </li>
+              <li class="breadcrumb-item"><a href="#!">Summary</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+      <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-blue order-card">
+          <div class="card-body">
+            <h6 class="text-white">Total Registered</h6>
+            <h2 class="text-right text-white">
+              <span>{{total_register}}</span>
+            </h2>
+            <p class="m-b-0">
+              Interviewed<span class="float-right">{{total_interviewd}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-green order-card">
+          <div class="card-body">
+            <h6 class="text-white">Approved</h6>
+            <h2 class="text-right text-white">
+              <span>{{total_approve}}</span>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-yellow order-card">
+          <div class="card-body">
+            <h6 class="text-white">Pending</h6>
+            <h2 class="text-right text-white">
+              <span>{{total_pending}}</span>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-red order-card">
+          <div class="card-body">
+            <h6 class="text-white">Rejected</h6>
+            <h2 class="text-right text-white">
+              <span>{{total_rejected}}</span>
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      {% comment %} chart {% endcomment %}
+
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Robu Department</h5>
+          </div>
+          <div class="card-body">
+            <div id="polar-chart-1" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+      {% comment %} chart {% endcomment %}
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Duburi Department</h5>
+          </div>
+          <div class="card-body">
+            <div id="polar-chart-2" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+          $(document).ready(function() {
+              setTimeout(function() {
+                  $(function() {
+                      var options = {
+                          chart: {
+                              height: 320,
+                              type: 'polarArea',
+                          },
+                          labels: ['Not Robu Memeber', 'A & D', 'RPM', 'IT', 'HR','Writing','sp','Event','F&M'],
+                          series: [{{isrobu}}, {{A_D}}, {{RPM}}, {{IT}}, {{HR}},{{Writing}},{{sp}},{{Event}},{{F_M}}],
+
+                           stroke: {
+                                  colors: ['#fff']
+                                  },
+                          fill: {
+                          opacity: 0.8
+                          },
+                          dataLabels: {
+                              enabled: true,
+                              dropShadow: {
+                                  enabled: true,
+                              }
+                          },
+                          responsive: [{
+                              breakpoint: 480,
+                              options: {
+                                  legend: {
+                                      position: 'bottom'
+                                  }
+                              }
+                          }]
+                      }
+                      var chart = new ApexCharts(
+                          document.querySelector("#polar-chart-1"),
+                          options
+                      );
+                      chart.render();
+                  });
+
+
+              }, 700);
+
+
+          });
+          $(document).ready(function() {
+              setTimeout(function() {
+                  $(function() {
+                      var options = {
+                        series: [{
+        name: 'Members',
+        data: [{{machine}}, {{Control}}, {{Modelling}}, {{writing}}, {{sensor}},
+         {{Mechanical}}, {{Operations}},{{Outreach}}]
+      }],
+        annotations: {
+        points: [{
+          x: '',
+          seriesIndex: 0,
+          label: {
+            borderColor: '#775DD0',
+            offsetY: 0,
+            style: {
+              color: '#fff',
+              background: '#775DD0',
+            },
+            text: '',
+          }
+        }]
+      },
+      chart: {
+        height: 350,
+        type: 'bar',
+      },
+
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          columnWidth: '50%',
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 2
+      },
+
+      grid: {
+        row: {
+          colors: ['#fff', '#f2f2f2']
+        }
+      },
+      xaxis: {
+        labels: {
+          rotate: -45
+        },
+        categories: ['Machine Vision', 'Control', '3d Modelling', 'Paper writing',
+         'Sensor & Circuit',
+          'Mechanical', 'Operations','Outreach'
+        ],
+        tickPlacement: 'on'
+      },
+      yaxis: {
+        title: {
+          text: 'Members',
+        },
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'light',
+          type: "horizontal",
+          shadeIntensity: 0.25,
+          gradientToColors: undefined,
+          inverseColors: true,
+          opacityFrom: 0.85,
+          opacityTo: 0.85,
+          stops: [50, 0, 100]
+        },
+      }
+                      }
+                      var chart = new ApexCharts(
+                          document.querySelector("#polar-chart-2"),
+                          options
+                      );
+                      chart.render();
+                  });
+
+
+              }, 700);
+
+
+          });
+    </script>
+
+    {% endblock javascripts %}
+  </div>
+</div>

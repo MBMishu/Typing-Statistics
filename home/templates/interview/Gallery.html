@@ -1,0 +1,102 @@
+{% extends "interview/base.html" %} {% load static %} {% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        {% include 'interview/message.html' %}
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Gallery</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home' %}"><i class="feather icon-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#!">Gallery</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header ml-auto">
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive table-bordered">
+                            <table class="table " id="table_id">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>image</th>
+                                        <th>Date</th>
+                                        <th>Delete</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="table-striped table-hover">
+
+                                    {% for item in list %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <a class="venobox" href="{{item.PicURL}}"> <img src="{{item.PicURL}}" width="120px" class="img-fluid img-responsive" alt=""></a>
+                                        </td>
+                                        <td>{{item.date_created}}</td>
+                                        <td><a href="{% url 'galleryDelete' item.id %}" class="btn btn-sm btn-danger"> Delete</a></td>
+
+                                    </tr>
+
+
+                                    {% endfor %}
+                                    <tfoot class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>image</th>
+                                            <th>Date</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="{% url 'gallery' %}" class="dropzone" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} {% block javascripts %}
+<script>
+    $(".venobox").venobox({
+        spinner: "cube-grid",
+        share: false,
+    });
+    $(document).ready(function() {
+
+
+        $('#table_id').DataTable();
+
+    });
+</script>
+{% endblock javascripts %}

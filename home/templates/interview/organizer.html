@@ -1,0 +1,164 @@
+{% extends "interview/base.html" %} {% load static %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+    
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+    
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    /* Rounded sliders */
+    
+    .slider.round {
+        border-radius: 34px;
+    }
+    
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+{% endblock stylesheets %} {% block content %}
+
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        {% include 'interview/message.html' %}
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Interviewer</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Interviewer</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- [ basic-table ] start -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive table-bordered">
+                            <table class="table " id="table_id">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Number</th>
+                                        <th>Role</th>
+                                        <th>Login Access</th>
+                                        
+                                        <th>delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-striped table-hover">
+
+                                    {% for item in interviewers %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{item.interviewer.name}}</td>
+                                        <td>{{item.interviewer.email}}</td>
+                                        <td>{{item.interviewer.phone}}</td>
+                                        <td>{{item.interviewer.role}}</td>
+                                       
+                                        <td>
+
+                                            {% if item.is_staff %}
+                                            <a href="{% url 'toggle' item.id %}" class="btn btn-md btn-success"><i class="las la-check-circle mx-1"></i>Yes</a> {% else %}
+                                            <a href="{% url 'Handletoggle' item.id %}" class="btn btn-md btn-danger"><i class="las la-check-circle mx-1"></i>No</a> {% endif %}
+                                        </td>
+                                        
+                                        <td><a type="submit" href="{% url 'InterviewerDelete' item.id %} " class="btn btn-sm btn-outline-danger"><i class="ri-delete-bin-2-line mx-1"></i>Delete</a></td>
+
+                                    </tr>
+
+                                   
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</section>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+
+
+        $('#table_id').DataTable();
+
+    });
+</script>
+
+
+
+{% endblock javascripts %}

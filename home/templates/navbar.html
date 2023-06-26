@@ -1,0 +1,56 @@
+<!-- ***** Header Area Start ***** -->
+{% load static %}
+<header
+  class="header-area header-sticky wow slideInDown"
+  data-wow-duration="0.75s"
+  data-wow-delay="0s"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main-nav">
+          <!-- ***** Logo Start ***** -->
+          <a href="{% url 'Home' %}" class="logo">
+        
+            <img
+              src="{% static 'assets/images/service-icon-04.png' %}"
+              class="img-fluid"
+              alt=""
+            />
+            
+          </a>
+          <!-- ***** Logo End ***** -->
+          <!-- ***** Menu Start ***** -->
+          <ul class="nav">
+            <li class="scroll-to-section">
+              <a href="#top" class="active">Home</a>
+            </li>
+            
+            </li>
+        
+            <li>
+              <div class="gradient-button">
+                {% if request.user.username %}
+                <a id="" href="{% url 'user_Handlelogout' %}"
+                  ><i class="fa fa-sign-in-alt"></i> logout</a
+                >
+                {% else %}
+                <a id="" href="{% url 'user_Handlelogin' %}"
+                ><i class="fa fa-sign-in-alt"></i> Sign In Now</a
+              >
+                {% endif %}
+                
+              </div>
+            </li>
+          </ul>
+          <a class='menu-trigger'>
+            <span>Menu</span>
+        </a>
+          <!-- ***** Menu End ***** -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+

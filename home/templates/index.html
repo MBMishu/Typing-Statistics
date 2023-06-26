@@ -1,0 +1,221 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="main-banner" id="top">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 align-self-center text-center">
+        <div class="show-up">
+          <p>
+            <strong>Typing Time:</strong>
+            <span id="typingTime">0</span> seconds &emsp;
+            <strong>Inactive Time:</strong>
+            <span id="inactiveTime">0</span> seconds
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 align-self-center">
+        <div class="show-up header-text pdf-container">
+          {% for item in list %}
+
+          <object
+            data="{{item.PdfURL}}#toolbar=0"
+            type="application/pdf"
+            style="width: 100%; height: 600px"
+          >
+            <p>
+              Sorry, your browser doesn't support embedded PDFs . You can
+              download the PDF
+              <a href="{{item.PdfURL}}">here</a>.
+            </p>
+          </object>
+
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 mt-5 mx-auto text-center">
+        <div
+          class="right-image wow fadeInRight"
+          data-wow-duration="1s"
+          data-wow-delay="0.5s"
+        >
+          <h2 class="text-capitalize">Typing Statistics</h2>
+          <textarea
+            id="typingForm"
+            rows="10"
+            cols="50"
+            oninput="handleInput()"
+            onkeyup="handleKeyUp()"
+          ></textarea>
+          <p>Word Count: <span id="wordCount">0</span></p>
+          <p>Character Count: <span id="charCount">0</span></p>
+
+          <div class="gradient-button mt-3">
+            {% if request.user.username %}<a
+              href=""
+              class=""
+              onclick="saveProgress()"
+              ><i class="fas fa-save"></i> Save Progress
+            </a>
+            {% else %}
+            <a href="{% url 'user_Handlelogin' %}" class=""
+              ><i class="fas fa-save"></i> Sign in
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %} {% block mycode %}
+
+<script>
+  var typingStartTime = null;
+  var typingEndTime = null;
+  var typingTime = 0;
+  var inactiveStartTime;
+  var inactiveEndTime;
+  var inactiveTime = 0;
+  var wordCount = 0;
+  var charCount = 0;
+  var sessionTimer;
+  var startTime, endTime;
+  var running = false;
+
+  function startTyping() {
+    document.getElementById("startPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+    typingStartTime = new Date();
+    startSessionTimer();
+  }
+
+  function handleInput() {
+    var inputText = document.getElementById("typingForm").value;
+    var words = inputText.trim().split(/\s+/);
+    wordCount = words.length;
+    charCount = inputText.length;
+    updateWordCount();
+    updateCharCount();
+
+    if (!typingStartTime) {
+      typingStartTime = new Date();
+      startSessionTimer();
+    }
+  }
+
+  function updateWordCount() {
+    document.getElementById("wordCount").textContent = wordCount;
+  }
+
+  function updateCharCount() {
+    document.getElementById("charCount").textContent = charCount;
+  }
+
+  function startSessionTimer() {
+    sessionTimer = setInterval(function () {
+      updateSessionTime();
+    }, 1000);
+  }
+
+  function updateSessionTime() {
+    var currentTime = new Date();
+    var sessionTime = Math.floor((currentTime - typingStartTime) / 1000);
+    document.getElementById("sessionTime").textContent = sessionTime;
+  }
+
+  function handleKeyUp() {
+    if (typingStartTime) {
+      typingEndTime = new Date();
+      typingTime = Math.floor((typingEndTime - typingStartTime) / 1000);
+      updateTypingTime();
+    }
+  }
+
+  function updateTypingTime() {
+    document.getElementById("typingTime").textContent = typingTime;
+  }
+
+  // Attach the event handlers
+  document
+    .getElementById("typingForm")
+    .addEventListener("keydown", handleKeyDown);
+  document.getElementById("typingForm").addEventListener("keyup", handleKeyUp);
+  window.addEventListener("blur", handleBlur);
+  window.addEventListener("focus", handleFocus);
+  document.getElementById("typingForm").addEventListener("input", handleInput);
+</script>
+<script>
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  function saveProgress() {
+    console.log("hello");
+    var typingTime = document.getElementById("typingTime").textContent;
+    var inactiveTime = document.getElementById("inactiveTime").textContent;
+    var wordCount = document.getElementById("wordCount").textContent;
+    var charCount = document.getElementById("charCount").textContent;
+
+    // Send the data to the Django backend using AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/save_progress/", true);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+    console.log(getCookie("csrftoken"));
+    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Progress saved successfully!");
+      }
+    };
+
+    var formData = {
+      typingTime: typingTime,
+      inactiveTime: inactiveTime,
+      wordCount: wordCount,
+      charCount: charCount,
+    };
+    console.log(formData);
+    xhr.send(JSON.stringify(formData));
+
+    clearInterval(sessionTimer);
+    typingEndTime = new Date();
+    var sessionTime = Math.floor((typingEndTime - typingStartTime) / 1000);
+    document.getElementById("sessionTime").textContent = sessionTime + " ";
+    document.getElementById("inactiveTime").textContent =
+      Math.floor(sessionTime - typingTime) + " ";
+  }
+</script>
+<script>
+  // Disable right-click context menu
+  window.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
+
+  // Disable text selection
+  window.addEventListener("selectstart", function (e) {
+    e.preventDefault();
+  });
+
+  // Disable Ctrl/Cmd + A, Ctrl/Cmd + C, Ctrl/Cmd + X
+  window.addEventListener("keydown", function (e) {
+    if (
+      (e.ctrlKey || e.metaKey) &&
+      (e.key === "a" || e.key === "c" || e.key === "x")
+    ) {
+      e.preventDefault();
+    }
+  });
+</script>
+{% endblock mycode %}
